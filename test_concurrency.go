@@ -50,9 +50,9 @@ func change_into_directory_and_run(target_dir string, target_file string) {
   
   command_string := "cat " + target_file
   
-  generate_text_file(target_dir, target_file)
   script_name := generate_bash_script(target_dir, command_string)
-  
+  generate_text_file(target_dir, target_file)
+    
   cmd := exec.Command(target_dir + "/" + script_name)
   output, error := cmd.Output()
   os.Remove(target_dir + "/" + script_name)
