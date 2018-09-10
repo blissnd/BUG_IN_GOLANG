@@ -37,3 +37,5 @@ EXPECTED BEHAVIOUR: That thread_2 does not reflect the current O/S directory sta
 including at the O/S level, so that the functions which are run in parallel remain fully re-entrant from the point-of-view of
 the caller.
 
+Attempted workaround on 'workaround' branch as given by Google experts did not work either.
+
