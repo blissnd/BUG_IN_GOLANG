@@ -16,7 +16,7 @@ var wait_group sync.WaitGroup
 
 func generate_text_file(target_dir string, filename string) {
     
-  binary_output := []byte("This is " + filename + "\n")  
+  binary_output := []byte("This is " + filename)  
   
   path_name := target_dir + "/" + filename
 
@@ -45,7 +45,7 @@ func generate_bash_script(target_dir string, command_string string) string {
 ///////////////////////////////////
 
 func change_into_directory_and_run(target_dir string, target_file string) {
-  fmt.Println(target_dir)  
+
   defer wait_group.Done()
   
   command_string := "cat " + target_file
