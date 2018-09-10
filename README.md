@@ -6,6 +6,7 @@ It is a demo of concurrent code that should be re-entrant but does not appear to
 demonstrate and provide evidence of the exact issue.
 
 > go build test_concurrency.go
+
 > ./test_concurrency.go
 
 Running the functions sequentially:
