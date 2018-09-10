@@ -22,7 +22,7 @@ func change_into_directory_1() {
   output, error := cmd.Output()
   
   if error != nil {
-    fmt.Println("<<< ERROR >>>")
+    fmt.Println("<<< ERROR getting file 1 from directory 1 >>>")
   }
   
   fmt.Println(string(output))
@@ -41,7 +41,7 @@ func change_into_directory_2() {
   output, error := cmd.Output()
   
   if error != nil {
-    fmt.Println("<<< ERROR >>>")
+    fmt.Println("<<< ERROR getting file 2 from directory 2 >>>")
   }
   
   fmt.Println(string(output))
