@@ -72,7 +72,7 @@ func main() {
   
   fmt.Println("\n--------------- Running the functions in parallel ---------------\n")
   
-  for loop := 0; loop < 10; loop++ {
+  for loop := 0; loop < 100; loop++ {
     wait_group.Add(1)
     loop_as_string := strconv.Itoa(loop)
     go change_into_directory_and_run("./DIR_" + loop_as_string, "file_" + loop_as_string + ".txt")
