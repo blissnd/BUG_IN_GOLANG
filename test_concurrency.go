@@ -5,13 +5,16 @@ import (
 	"os"
   "os/exec"
   "sync"
+  "runtime"
 )
 
 var wait_group1 sync.WaitGroup
 var wait_group2 sync.WaitGroup
 
 func change_into_directory_1() {
-
+  
+  runtime.LockOSThread()
+  
   defer wait_group1.Done()
   
   os.Chdir("./DIR_1")
@@ -26,11 +29,15 @@ func change_into_directory_1() {
   }
   
   fmt.Println(string(output))
-  os.Chdir("..") 
+  os.Chdir("..")
+  
+  runtime.UnlockOSThread()
 }
 
 func change_into_directory_2() {
-
+  
+  runtime.LockOSThread()
+  
   defer wait_group2.Done()
   
   os.Chdir("./DIR_2")
@@ -45,7 +52,9 @@ func change_into_directory_2() {
   }
   
   fmt.Println(string(output))
-  os.Chdir("..") 
+  os.Chdir("..")
+  
+  runtime.UnlockOSThread()
 }
 
 ///////////////////////////////////
@@ -65,9 +74,15 @@ func main() {
   wait_group1.Add(1)
   wait_group2.Add(1)
   
+  runtime.LockOSThread()  
   go change_into_directory_1()
+  runtime.UnlockOSThread()
+  
+  runtime.LockOSThread()
   go change_into_directory_2()
+  runtime.UnlockOSThread()
   
   wait_group1.Wait()
   wait_group2.Wait()
 }
+
