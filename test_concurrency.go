@@ -5,69 +5,78 @@ import (
 	"os"
   "os/exec"
   "sync"
+  "io/ioutil"
+  "strings"
+  "strconv"
 )
 
-var wait_group1 sync.WaitGroup
-var wait_group2 sync.WaitGroup
+var wait_group sync.WaitGroup
 
-func change_into_directory_1() {
+///////////////////////////////////
 
-  defer wait_group1.Done()
+func generate_text_file(target_dir string, filename string) {
+    
+  binary_output := []byte("This is " + filename + "\n")  
   
-  os.Chdir("./DIR_1")
-  current_directory, _ := os.Getwd()
-  fmt.Println("Current directory from change_into_directory_1(): " + current_directory)
-  
-  cmd := exec.Command("cat", "file_1.txt")
-  output, error := cmd.Output()
-  
-  if error != nil {
-    fmt.Println("<<< ERROR getting file 1 from directory 1 >>>")
-  }
-  
-  fmt.Println(string(output))
-  os.Chdir("..") 
-}
+  path_name := target_dir + "/" + filename
 
-func change_into_directory_2() {
-
-  defer wait_group2.Done()
-  
-  os.Chdir("./DIR_2")
-  current_directory, _ := os.Getwd()
-  fmt.Println("Current directory from change_into_directory_2(): " + current_directory)
-  
-  cmd := exec.Command("cat", "file_2.txt")
-  output, error := cmd.Output()
-  
-  if error != nil {
-    fmt.Println("<<< ERROR getting file 2 from directory 2 >>>")
-  }
-  
-  fmt.Println(string(output))
-  os.Chdir("..") 
+  ioutil.WriteFile(path_name, binary_output, 0755)
 }
 
 ///////////////////////////////////
 
+func generate_bash_script(target_dir string, command_string string) string {
+  
+  exec.Command("mkdir", "-p", target_dir).Run()
+  
+  uuid, _ := exec.Command("uuidgen").Output()
+  uuid_string := strings.TrimSpace(string(uuid))
+    
+  binary_output := []byte("#!/bin/bash\ncd " + target_dir + "\n" + command_string + "\n")  
+  
+  script_name := uuid_string + ".sh" 
+  path_name := target_dir + "/" + script_name
+
+  ioutil.WriteFile(path_name, binary_output, 0755)
+  
+  return script_name
+}
+
+///////////////////////////////////
+
+func change_into_directory_and_run(target_dir string, target_file string) {
+  fmt.Println(target_dir)  
+  defer wait_group.Done()
+  
+  command_string := "cat " + target_file
+  
+  generate_text_file(target_dir, target_file)
+  script_name := generate_bash_script(target_dir, command_string)
+  
+  cmd := exec.Command(target_dir + "/" + script_name)
+  output, error := cmd.Output()
+  os.Remove(target_dir + "/" + script_name)
+  
+  if error != nil {
+    fmt.Println("<<< ERROR getting file from directory >>>")
+    //panic(error)
+  }
+  
+  fmt.Println(string(output))
+}
+
+///////////////////////////////////
+///////////////////////////////////
+
 func main() {
-  
-  fmt.Println("Running the functions sequentially:\n")
-  
-  wait_group1.Add(1)
-  wait_group2.Add(1)
-  
-  change_into_directory_1()
-  change_into_directory_2()
   
   fmt.Println("\n--------------- Running the functions in parallel ---------------\n")
   
-  wait_group1.Add(1)
-  wait_group2.Add(1)
+  for loop := 0; loop < 10; loop++ {
+    wait_group.Add(1)
+    loop_as_string := strconv.Itoa(loop)
+    go change_into_directory_and_run("./DIR_" + loop_as_string, "file_" + loop_as_string + ".txt")
+  }
   
-  go change_into_directory_1()
-  go change_into_directory_2()
-  
-  wait_group1.Wait()
-  wait_group2.Wait()
+  wait_group.Wait()
 }
