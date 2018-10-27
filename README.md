@@ -1,4 +1,4 @@
-# BUG_IN_GOLANG
+# Workaround attempt
 
 This is demo of what I consider to be a critical bug in the GoLang runtime that I would like Google to fix. 
 
