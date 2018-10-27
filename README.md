@@ -1,4 +1,5 @@
-# BUG_IN_GOLANG
 
-WORKAROUND
 
+
+
+Workaround
