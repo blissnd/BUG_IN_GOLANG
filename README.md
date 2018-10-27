@@ -1,9 +1,6 @@
 # Workaround for issue with system call from multiple threads in parallel
 
-This is demo of what I consider to be a critical bug in the GoLang runtime that I would like Google to fix. 
-
-It is a demo of concurrent code that should be re-entrant but does not appear to be. The source code and results from running it
-demonstrate and provide evidence of the exact issue.
+Demo of issue.
 
 > go build test_concurrency.go
 
@@ -29,7 +26,7 @@ Current directory from change_into_directory_1(): /home/blissnd/Documents/BUG_IN
 
 
 --------------------------------------------------------------------------------------------------------
-As shown, the O/S system calls to change the directory in thread_1 & thread_2 [functions change_into_directory_1() & change_into_directory_2()]
+O/S system calls to change the directory in thread_1 & thread_2 [functions change_into_directory_1() & change_into_directory_2()]
 are not remaining indenpendent of one another. They seem to be sharing system state resources underneath, implying the code is 
 not re-entrant.
 
@@ -39,7 +36,7 @@ the caller.
 
 JAVA CASE
 =========
-Java copes perfectly well with the same use case. To run the java:
+Java copes with a similar  use case. To run the java:
 
 > cd JAVA_TEST
 
