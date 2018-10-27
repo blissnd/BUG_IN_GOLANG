@@ -9,17 +9,17 @@ Demo of issue.
 
 Running the functions sequentially:
 
-Current directory from change_into_directory_1(): /home/blissnd/Documents/BUG_IN_GOLANG/DIR_1
+Current directory from change_into_directory_1():
 *** This is file 1 ***
 
-Current directory from change_into_directory_2(): /home/blissnd/Documents/BUG_IN_GOLANG/DIR_2
+Current directory from change_into_directory_2():
 *** This is file 2 ***
 
 
 --------------- Running the functions in parallel ---------------
 
-Current directory from change_into_directory_2(): /home/blissnd/Documents/BUG_IN_GOLANG/DIR_2
-Current directory from change_into_directory_1(): /home/blissnd/Documents/BUG_IN_GOLANG/DIR_2
+Current directory from change_into_directory_2(): 
+Current directory from change_into_directory_1():
 *** This is file 2 ***
 
 <<< ERROR getting file 1 from directory 1>>>
