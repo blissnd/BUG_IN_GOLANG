@@ -43,5 +43,3 @@ Java copes with a similar  use case. To run the java:
 > javac *.java
 
 > java Concurrency_Test 
-
-It works perfectly every time with a very similar multi-threaded use case with Java (OpenJDK 1.8). So my question is why doesn't GoLang behave similary (i.e.*reasonably*) like Java does...???
