@@ -18,7 +18,7 @@ func change_into_directory_1() {
   fmt.Println("Current directory from change_into_directory_1(): " + current_directory)
   
   cmd := exec.Command("cat", "file_1.txt")
-  cmd.Dir = "./DIR_1"
+  cmd.Dir = current_directory + "/DIR_1"
 
   output, error := cmd.Output()
   
@@ -27,7 +27,6 @@ func change_into_directory_1() {
   }
   
   fmt.Println(string(output))
-  os.Chdir("..") 
 }
 
 func change_into_directory_2() {
@@ -38,7 +37,7 @@ func change_into_directory_2() {
   fmt.Println("Current directory from change_into_directory_2(): " + current_directory)
   
   cmd := exec.Command("cat", "file_2.txt")
-  cmd.Dir = "./DIR_2"
+  cmd.Dir = current_directory + "/DIR_2"
 
   output, error := cmd.Output()
   
@@ -47,7 +46,6 @@ func change_into_directory_2() {
   }
   
   fmt.Println(string(output))
-  os.Chdir("..") 
 }
 
 ///////////////////////////////////
