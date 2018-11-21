@@ -14,11 +14,12 @@ func change_into_directory_1() {
 
   defer wait_group1.Done()
   
-  os.Chdir("./DIR_1")
   current_directory, _ := os.Getwd()
   fmt.Println("Current directory from change_into_directory_1(): " + current_directory)
   
   cmd := exec.Command("cat", "file_1.txt")
+  cmd.Dir = "./DIR_1"
+
   output, error := cmd.Output()
   
   if error != nil {
@@ -33,11 +34,12 @@ func change_into_directory_2() {
 
   defer wait_group2.Done()
   
-  os.Chdir("./DIR_2")
   current_directory, _ := os.Getwd()
   fmt.Println("Current directory from change_into_directory_2(): " + current_directory)
   
   cmd := exec.Command("cat", "file_2.txt")
+  cmd.Dir = "./DIR_2"
+
   output, error := cmd.Output()
   
   if error != nil {
